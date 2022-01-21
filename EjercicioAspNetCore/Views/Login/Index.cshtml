@@ -1,0 +1,77 @@
+﻿@{
+
+    Layout = null;
+
+}
+
+@using EjercicioAspNetCore.Models.LoginModels
+@model LoginUsuario
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <div class="container">
+        <h1>Inicio de sesión</h1>
+
+        <form method="post" asp-controller="Login" asp-action="IniciarSesion">
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="usuario">Usuario:</label>
+                        <input asp-for="Usuario" type="text" class="form-control" />
+                        <span asp-validation-for="Usuario" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="contrasenia">Contraseña:</label>
+                        <input asp-for="Contrasenia" type="password" class="form-control" />
+                        <span asp-validation-for="Contrasenia" class="text-danger"></span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Ingresar</button>
+
+                    </div>
+                </div>
+            </div>
+
+            @if (ViewBag.UsuarioIncorrecto != null)
+            {
+                if (ViewBag.UsuarioIncorrecto)
+                {
+                    <span asp-validation-for="Contrasenia" class="text-danger">Las credenciales no son correctas</span>
+                }
+
+            }
+
+
+        </form>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

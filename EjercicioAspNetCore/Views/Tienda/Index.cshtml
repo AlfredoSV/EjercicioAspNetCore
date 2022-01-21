@@ -1,0 +1,92 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Titulo"] = "Tienda";
+}
+
+<div class="container" id="formAltaPacientes">
+    <div class="row">
+        <h4 class="text-muted">Crud - Tienda</h4>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+
+            <div class="mb-3">
+
+                <label for="nombre">Sucursal:</label>
+                <input id="nombre" class="form-control form-control-sm  mt-2" type="text">
+
+            </div>
+        </div>
+
+        <br />
+
+        <div class="col-sm-4 col-md-6 col-lg-4">
+
+            <div class=" mb-3">
+                <label for="apellidoP">Código postal:</label>
+                <input id="apellidoP" type="text" class="form-control form-control-sm  mt-2">
+            </div>
+
+        </div>
+
+        <div class="col-sm-4 col-md-6 col-lg-4">
+
+            <div class=" mb-3">
+                <label for="apellidoM">Estado:</label>
+                <input id="apellidoM" type="text" class="form-control form-control-sm  mt-2">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+
+            <div class="mb-3">
+
+                <label for="nombre">Delegación o municipio:</label>
+                <input id="nombre" class="form-control form-control-sm  mt-2" type="text">
+
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-6 col-lg-4">
+
+            <div class=" mb-3">
+                <label for="apellidoP">Calle y número:</label>
+                <input id="apellidoP" type="text" class="form-control form-control-sm  mt-2">
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit" id="btnGuardarPaciente" class="btn btn-success">Enviar</button>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="dx-viewport mt-3">
+
+        <div class="demo-container">
+            <div id="gridTiendas"></div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts {
+    <script src="~/js/TiendaJs/site.js" asp-append-version="true"></script>
+}

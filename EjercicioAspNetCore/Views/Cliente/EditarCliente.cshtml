@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Titulo"] = "Clientes";
+}
+
+
+@model Cliente
+
+<div class="container">
+    <form method="post" asp-controller="Cliente" asp-action="GuardarClienteEditado">
+        <div class="row">
+            <h4 class="text-muted">Crud - @ViewData["Titulo"]</h4>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 col-lg-4">
+
+                <div class="mb-3">
+
+                    <label>Nombre:</label>
+                    <input asp-for="Nombre" class="form-control form-control-sm  mt-2" type="text">
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Código postal:</label>
+                    <input asp-for="CodigoPostal" type="text" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="CodigoPostal" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Estado:</label>
+                    <input asp-for="Estado" type="text" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 col-lg-4">
+
+                <div class="mb-3">
+
+                    <label>Delegación o municipio:</label>
+                    <input asp-for="DelegacionMunicipio" class="form-control form-control-sm  mt-2" type="text">
+                    <span asp-validation-for="DelegacionMunicipio" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Calle y número:</label>
+                    <input asp-for="CalleNum" type="text" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="CalleNum" class="text-danger"></span>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-success">Editar</button>
+                <a href="/Cliente/Cancelar" class="btn btn-danger">Cancelar</a>
+            </div>
+
+        </div>
+
+        <input type="hidden" asp-for="IdCliente" />
+
+    </form>
+
+
+
+</div>
+
+
+
+
