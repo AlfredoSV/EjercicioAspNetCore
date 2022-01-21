@@ -5,12 +5,13 @@
     ViewData["Titulo"] = "Tienda";
 }
 
+
 @model Tienda
 
 <div class="container">
-    <form method="post" asp-controller="Tienda" asp-action="CrearTienda">
+    <form method="post" asp-controller="Cliente" asp-action="GuardarClienteEditado">
         <div class="row">
-            <h4 class="text-muted">Crud - Tienda</h4>
+            <h4 class="text-muted">Crud - @ViewData["Titulo"]</h4>
         </div>
 
         <div class="row">
@@ -22,11 +23,8 @@
                     <label>Sucursal:</label>
                     <input asp-for="Sucursal" class="form-control form-control-sm  mt-2" type="text">
                     <span asp-validation-for="Sucursal" class="text-danger"></span>
-
                 </div>
             </div>
-
-            <br />
 
             <div class="col-sm-4 col-md-6 col-lg-4">
 
@@ -59,6 +57,7 @@
                     <label>Delegación o municipio:</label>
                     <input asp-for="DelegacionMunicipio" class="form-control form-control-sm  mt-2" type="text">
                     <span asp-validation-for="DelegacionMunicipio" class="text-danger"></span>
+
                 </div>
             </div>
 
@@ -74,26 +73,24 @@
 
 
         </div>
+
+
         <div class="row">
             <div class="col-6">
-                <button type="submit" id="btnGuardarPaciente" class="btn btn-success">Enviar</button>
-
+                <button type="submit" class="btn btn-success">Editar</button>
+                <a href="/Tienda/Cancelar" class="btn btn-danger">Cancelar</a>
             </div>
 
         </div>
 
+        <input type="hidden" asp-for="IdTienda" />
+
     </form>
 
-    <div class="dx-viewport mt-3">
 
-        <div class="demo-container">
-            <div id="gridTiendas"></div>
-        </div>
-    </div>
 
 </div>
 
 
-@section scripts {
-    <script src="~/js/TiendaJs/site.js" asp-append-version="true"></script>
-}
+
+

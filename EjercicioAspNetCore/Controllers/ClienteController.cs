@@ -10,6 +10,7 @@ using Data.Dtos;
 using Microsoft.Extensions.Configuration;
 using EjercicioAspNetCore.Models;
 using EjercicioAspNetCore.Filters;
+using Microsoft.AspNetCore.Http;
 
 namespace EjercicioAspNetCore.Controllers
 {
@@ -24,7 +25,7 @@ namespace EjercicioAspNetCore.Controllers
         }
         public IActionResult Index()
         {
-
+            ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
             return View();
         }
 
@@ -75,7 +76,7 @@ namespace EjercicioAspNetCore.Controllers
                 DelegacionMunicipio = clienteRes.DelegacionMunicipio,
                 CalleNum = clienteRes.CalleNum
             };
-
+            ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
             return View("EditarCliente", clienteModel);
 
         }

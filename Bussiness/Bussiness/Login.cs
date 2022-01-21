@@ -13,12 +13,14 @@ namespace Bussiness.Bussiness
         {
             _repositorioLogin = new RepositorioLogin(conex);
         }
-        public bool ValidarUsuario(DtoUsuarioLogin dtoUsuarioLogin)
+        public DtoUsuarioLogin ObtenerUsuario(DtoUsuarioLogin dtoUsuarioLogin)
         {
             var usuario = _repositorioLogin.BuscarUsuarioLoginPorUsuario(dtoUsuarioLogin.Correo, dtoUsuarioLogin.Contrasenia);
 
-            return usuario != null;
+            return usuario;
 
         }
+
+
     }
 }

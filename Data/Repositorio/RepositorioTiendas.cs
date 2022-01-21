@@ -33,30 +33,49 @@ namespace Data.Repositorio
             }
         }
 
-        public DtoArticulo BuscarTiendaPorId(Guid idCliente)
+        public DtoTienda BuscarTiendaPorId(Guid idTienda)
         {
-            var sql = "";
+            var sql = @"SELECT [idTienda]
+                        ,[sucursal]
+                        ,[codigoPostal]
+                        ,[estado]
+                        ,[delegacionMunicipio]
+                        ,[calleNum]
+                        FROM [Tiendas] WHERE idTienda = @idTienda";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                return db.Query<DtoArticulo>(sql, idCliente).FirstOrDefault();
+                return db.Query<DtoTienda>(sql, new { idTienda }).FirstOrDefault();
             }
         }
 
-        public void EliminarTienda(Guid id)
+        public void EliminarTienda(Guid idTienda)
         {
-            var sql = "";
+            var sql = "DELETE FROM TIENDAS WHERE idTienda = @idTienda";
 
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                db.Query(sql, id);
+                db.Query(sql, new { idTienda });
             }
         }
 
         public void GuardarTienda(DtoTienda dtoTienda)
         {
-            var sql = @"";
+            var sql = @"INSERT INTO [dbo].[Tiendas]
+           ([idTienda]
+           ,[sucursal]
+           ,[codigoPostal]
+           ,[estado]
+           ,[delegacionMunicipio]
+           ,[calleNum])
+     VALUES
+           (NEWID()
+           ,@sucursal
+           ,@codigoPostal
+           ,@estado
+           ,@delegacionMunicipio
+           ,@calleNum)";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
@@ -66,7 +85,13 @@ namespace Data.Repositorio
 
         public void EditarTienda(DtoTienda dtoTienda)
         {
-            var sql = @"";
+            var sql = @"UPDATE [dbo].[Tiendas] SET 
+                      [sucursal] = @sucursal
+                     ,[codigoPostal] = @codigoPostal
+                     ,[estado] = @estado
+                     ,[delegacionMunicipio] = @delegacionMunicipio
+                     ,[calleNum] = @calleNum
+                     WHERE [idTienda] = @idTienda";
 
             using (var db = new SqlConnection(_conexion))
             {

@@ -4,7 +4,7 @@
 // Write your JavaScript code.
 
 
-$('#gridTiendas').dxDataGrid({
+$('#gridHistorialCompras').dxDataGrid({
     dataSource: [],
     showBorders: true,
     remoteOperations: true,
@@ -59,16 +59,6 @@ $('#gridTiendas').dxDataGrid({
         alignment: "center",
         cellTemplate(container, options) {
 
-            $('<a class="btn btn-danger">Eliminar</a>')
-                .attr('href', "/Tienda/EliminarTienda/" + options.data.idTienda)
-                .appendTo(container);
-            $('<span> / <span>')
-                .appendTo(container);
-            $('<a class="btn btn-primary">Editar</a>')
-                .attr('href', "/Tienda/EditarTienda/" + options.data.idTienda)
-                .appendTo(container);
-            $('<span> / <span>')
-                .appendTo(container);
 
             $('<a class="btn btn-info"  href="#' + options.data.idTienda + '" >Detalle</a>')
                 .appendTo(container);
@@ -92,7 +82,7 @@ const consultarClientes = (meth, urlSe) => {
         url: urlSe
     }).done((result) => {
 
-        let dataGrid = $("#gridTiendas").dxDataGrid({
+        let dataGrid = $("#gridHistorialCompras").dxDataGrid({
         }).dxDataGrid("instance");
         let dataSource = dataGrid.getDataSource();
 

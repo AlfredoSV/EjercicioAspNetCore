@@ -22,5 +22,25 @@ namespace Data.Dtos
             DelegacionMunicipio = delegacionMunicipio;
             CalleNum = calleNum;
         }
+
+        public DtoTienda(string sucursal, string codigoPostal, string estado, string delegacionMunicipio, string calleNum)
+        {
+            this.sucursal = sucursal;
+            CodigoPostal = codigoPostal;
+            Estado = estado;
+            DelegacionMunicipio = delegacionMunicipio;
+            CalleNum = calleNum;
+        }
+
+        public static DtoTienda Create(string sucursal, string codigoPostal, string estado, string delegacionMunicipio, string calleNum)
+        {
+            return new DtoTienda(sucursal, codigoPostal, estado, delegacionMunicipio, calleNum);
+        }
+
+        public static DtoTienda Create(Guid idTienda, string sucursal, string codigoPostal, string estado, string delegacionMunicipio, string calleNum)
+        {
+            return new DtoTienda(idTienda, sucursal, codigoPostal, estado, delegacionMunicipio, calleNum);
+        }
+
     }
 }

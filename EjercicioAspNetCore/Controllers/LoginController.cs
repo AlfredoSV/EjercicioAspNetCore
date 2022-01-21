@@ -28,19 +28,25 @@ namespace EjercicioAspNetCore.Controllers
         [HttpPost]
         public IActionResult IniciarSesion([FromForm] LoginUsuario loginUsuario)
         {
-            var usuarioCorrecto = false;
+
             ViewBag.UsuarioIncorrecto = false;
 
             if (ModelState.IsValid)
             {
                 var usuario = DtoUsuarioLogin.Create(loginUsuario.Usuario, loginUsuario.Contrasenia);
 
-                usuarioCorrecto = _login.ValidarUsuario(usuario);
+                var usuarioRes = _login.ObtenerUsuario(usuario);
 
-                if (usuarioCorrecto)
+                if (usuarioRes != null)
                 {
-                    HttpContext.Session.SetString("Usuario", usuario.Correo);
-                    return RedirectToAction("Index", "Articulo");
+                    HttpContext.Session.SetString("Usuario", usuarioRes.Correo);
+                    HttpContext.Session.SetString("Rol", usuarioRes.Rol);
+
+                    if (usuarioRes.Rol.Equals("Admin"))
+                        return RedirectToAction("Index", "Articulo");
+                    else if (usuarioRes.Rol.Equals("Cliente"))
+                        return RedirectToAction("Index", "Comprar");
+
                 }
                 else
                 {
@@ -56,6 +62,7 @@ namespace EjercicioAspNetCore.Controllers
         public IActionResult CerrarSesion()
         {
             HttpContext.Session.SetString("Usuario", "");
+            HttpContext.Session.SetString("Rol", "");
             return View("Index");
         }
 

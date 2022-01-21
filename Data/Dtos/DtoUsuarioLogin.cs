@@ -10,11 +10,14 @@ namespace Data.Dtos
         public string Correo { get; set; }
         public string Contrasenia { get; set; }
 
-        public DtoUsuarioLogin(Guid idUsuario, string correo, string contrasenia)
+        public string Rol { get; set; }
+
+        public DtoUsuarioLogin(Guid idUsuario, string correo, string contrasenia, string rol)
         {
             IdUsuario = idUsuario;
             Correo = correo;
             Contrasenia = contrasenia;
+            Rol = rol;
         }
 
         public DtoUsuarioLogin(string correo, string contrasenia)
@@ -23,9 +26,9 @@ namespace Data.Dtos
             Contrasenia = contrasenia;
         }
 
-        public static DtoUsuarioLogin Create(Guid IdUsuario, string usuario, string contrasenia)
+        public static DtoUsuarioLogin Create(Guid IdUsuario, string usuario, string contrasenia, string rol)
         {
-            return new DtoUsuarioLogin(IdUsuario, usuario, contrasenia);
+            return new DtoUsuarioLogin(IdUsuario, usuario, contrasenia, rol);
         }
 
         public static DtoUsuarioLogin Create(string usuario, string contrasenia)

@@ -1,4 +1,5 @@
 ﻿using EjercicioAspNetCore.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,13 @@ namespace EjercicioAspNetCore.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
+            return View();
+        }
+
+        public IActionResult HistorialDeCompras()
+        {
+            ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
             return View();
         }
     }

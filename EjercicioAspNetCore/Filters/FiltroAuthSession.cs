@@ -15,9 +15,10 @@ namespace EjercicioAspNetCore.Filters
         public void OnActionExecuted(ActionExecutedContext context)
         {
 
-            var vl1 = context.HttpContext.Session.GetString("Usuario");
+            var usuario = context.HttpContext.Session.GetString("Usuario");
+            var rol = context.HttpContext.Session.GetString("Rol"); ;
 
-            if (vl1 == null || vl1.Equals(""))
+            if ((usuario == null || usuario.Equals("")) || (rol == null || rol.Equals("")))
             {
                 var controller = (ControllerBase)context.Controller;
                 context.Result = controller.RedirectToAction("Index", "Login");
@@ -28,6 +29,14 @@ namespace EjercicioAspNetCore.Filters
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
+            var usuario = context.HttpContext.Session.GetString("Usuario");
+            var rol = context.HttpContext.Session.GetString("Rol"); ;
+
+            if ((usuario == null || usuario.Equals("")) || (rol == null || rol.Equals("")))
+            {
+                var controller = (ControllerBase)context.Controller;
+                context.Result = controller.RedirectToAction("Index", "Login");
+            }
 
         }
     }

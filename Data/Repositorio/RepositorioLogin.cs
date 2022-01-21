@@ -19,10 +19,10 @@ namespace Data.Repositorio
 
         public DtoUsuarioLogin BuscarUsuarioLoginPorUsuario(string usuario, string contrasenia)
         {
-            var sql = @"SELECT [IdUsuario]
-                      ,[correo]
-                      ,[contrasenia]
-                     FROM[Usuarios] where correo = @usuario and contrasenia = @contrasenia ";
+            var sql = @"SELECT usu.[idUsuario],usu.[correo]
+                        ,usu.[contrasenia], ro.nombre as rol
+                        FROM [Usuarios] usu inner join[UsuarioRol] usurol on usu.idUsuario= usurol.idUsuario inner join [Rol] ro
+                        on ro.IdRol = usurol.idRol where correo = @usuario and contrasenia = @contrasenia ";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();

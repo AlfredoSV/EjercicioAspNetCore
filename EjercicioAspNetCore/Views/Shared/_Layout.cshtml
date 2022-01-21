@@ -1,9 +1,13 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    var rol = ViewBag.Rol;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EjercicioAspNetCore</title>
+    <title>EjercicioAspNetCore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <!-- ... -->
@@ -30,21 +34,29 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Articulo" asp-action="Index">Articulos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Tienda" asp-action="Index">Tienda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Comprar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Historial de mis compras</a>
-                        </li>
+                        @if (rol.Equals("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Articulo" asp-action="Index">Articulos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tienda" asp-action="Index">Tienda</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+                            </li>
+                        }
+                        else if (rol.Equals("Cliente"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Comprar" asp-action="Index">Comprar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Comprar" asp-action="HistorialDeCompras">Historial de mis compras</a>
+                            </li>
+
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-danger" asp-area="" asp-controller="Login" asp-action="CerrarSesion">Cerrar sesión</a>
                         </li>
