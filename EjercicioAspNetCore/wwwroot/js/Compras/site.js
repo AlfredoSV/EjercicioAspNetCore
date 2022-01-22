@@ -3,14 +3,106 @@
 
 // Write your JavaScript code.
 
+
+localStorage.removeItem("miCompra");
+localStorage.removeItem("totalCompra");
+
 const cancelarCompra = () => {
-    window.location;
+
+    location.reload();
+
+}
+
+
+const eliminarDeCarrito = (articulo) => {
+
+    let total = document.querySelector("#total");
+
+    //Quitar los elementos de la tabla y del local storage
+    let tablaCompra = document.querySelector("#cuerpoTablaCompra");
+
+    let artCargados = JSON.parse(localStorage.getItem("miCompra")).filter(function (value, index, arr) {
+        return value.id != articulo.id;
+    });
+
+    let articuloARestar = JSON.parse(localStorage.getItem("miCompra")).filter(function (value, index, arr) {
+        return value.id == articulo.id;
+    });
+
+    localStorage.setItem("miCompra", JSON.stringify(artCargados));
+    tablaCompra.innerHTML = '';
+
+    artCargados.forEach((x) => {
+        tablaCompra.innerHTML += `
+        <tr>
+
+            <td>${x.nombre}</td>
+            <td>${x.cantidadAr}</td>
+            <td>$${parseFloat(x.sub).toFixed(2)}</td >
+            <td><a href="#" id='${x.id}' onclick="eliminarDeCarrito(this)">Eliminar</a></td>
+        </tr>`;
+    });
+
+    //Restar al total y actualizar en el html
+
+    let totalCompra = parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2));
+
+    totalCompra -= parseFloat(parseFloat(articuloARestar[0].sub).toFixed(2));
+    total.innerText = parseFloat(totalCompra).toFixed(2);
+    localStorage.setItem("totalCompra", totalCompra)
+
+}
+
+const finalizarCompra = () => {
+    alert("Hola");
+    var compra = {
+        articulos: JSON.parse(localStorage.getItem("miCompra")),
+        total: parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2))
+
+    }
+
+    console.log(compra)
+
+    $.ajax({
+        method: 'POST',
+        data: compra,
+        url: '/Comprar/GenerarCompra'
+    }).done((result) => {
+
+
+
+
+    });
+
+}
+
+const cargarDetalleArticulo = () => {
+
+    let articulo = document.querySelector("#articulo");
+    let articulosLocalStorage = JSON.parse(localStorage.getItem("articulos"));
+    let cantidad = document.querySelector("#cantidad");
+    let precio = document.querySelector("#precio");
+    let stock = document.querySelector("#stock");
+
+
+    let resArticulo = articulosLocalStorage.find((x) => {
+
+        return x.codigo == articulo.value;
+
+    });
+
+    precio.value = resArticulo.precio;
+    stock.value = resArticulo.stock;
+    cantidad.value = '';
+    cantidad.max = resArticulo.stock;
+
 }
 
 const agregarAcarrito = () => {
 
-    let idArticulo = document.querySelector("#articulo").value;
-    console.log(idArticulo);
+    let articulo = document.querySelector("#articulo");
+
+    let total = document.querySelector("#total");
 
     let idTienda = document.querySelector("#tienda").value;
     console.log(idTienda);
@@ -23,7 +115,126 @@ const agregarAcarrito = () => {
 
     let stock = document.querySelector("#stock").value;
     console.log(stock);
+
+    let articuloNombre = articulo.options[articulo.selectedIndex].text;
+
+
+    let tablaCompra = document.querySelector("#cuerpoTablaCompra");
+
+    if (cantidad != '') {
+
+        let idArticuloCarrito = articulo.value + (new Date().getMilliseconds() + new Date().getTime());
+
+        let nuevoArticulo = {
+
+            id: idArticuloCarrito,
+            codigo: articulo.value,
+            cantidadAr: cantidad,
+            sub: parseFloat((precio * cantidad)).toFixed(2),
+            nombre: articuloNombre
+
+        }
+
+        tablaCompra.innerHTML += `
+        <tr>
+
+            <td>${articuloNombre}</td>
+            <td>${cantidad}</td>
+            <td>$${parseFloat((precio * cantidad)).toFixed(2)}</td >
+            <td><a href="#" id='${idArticuloCarrito}' onclick="eliminarDeCarrito(this)">Eliminar</a></td>
+        </tr>`;
+
+        let artCargados = new Array();
+
+        if (JSON.parse(localStorage.getItem("miCompra")) == undefined) {
+
+            artCargados.push(nuevoArticulo);
+            localStorage.setItem("miCompra", JSON.stringify(artCargados));
+
+        } else {
+
+            JSON.parse(localStorage.getItem("miCompra")).forEach((x) => {
+                artCargados.push(x);
+            })
+
+            artCargados.push(nuevoArticulo);
+
+            localStorage.setItem("miCompra", JSON.stringify(artCargados));
+
+        }
+    } else {
+        alert("Es necesario rellenar los campos")
+    }
+
+    let totalCompra = 0.0;
+
+    if (localStorage.getItem("totalCompra") == undefined) {
+
+        totalCompra = parseFloat((precio * cantidad)).toFixed(2);;
+
+    } else {
+
+        totalCompra = parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2));
+
+        totalCompra += parseFloat(parseFloat((precio * cantidad)).toFixed(2));
+    }
+
+    total.innerText = parseFloat(totalCompra).toFixed(2);
+    localStorage.setItem("totalCompra", totalCompra)
+
+
+
+
 }
+
+
+const cargarArticulos = () => {
+
+    let idTienda = document.querySelector("#tienda").value;
+    let articuloSelect = document.querySelector("#articulo");
+
+    let precio = document.querySelector("#precio");
+    let stock = document.querySelector("#stock");
+    let cantidad = document.querySelector("#cantidad");
+
+    articuloSelect.innerHTML = '';
+    cantidad.value = '';
+
+    precio.value = '';
+    stock.value = '';
+
+
+    $.ajax({
+        method: 'GET',
+        data: { idTienda },
+        url: '/Comprar/ArticulosPoTienda'
+    }).done((result) => {
+
+        if (result.length == 0) {
+            alert("Esta tienda no tiene ningun articulo asociado");
+            ///Falta deshabilitar botones
+        } else {
+            result.forEach((x) => {
+                articuloSelect.innerHTML += '<option value="' + x.codigo + '">' + x.descripcion + '</option>'
+            });
+
+
+            precio.value = result[0].precio;
+            stock.value = result[0].stock;
+            cantidad.max = result[0].stock;
+
+            localStorage.setItem("articulos", JSON.stringify(result));
+
+        }
+
+
+    });
+}
+
+
+cargarArticulos();
+
+
 
 /*
 

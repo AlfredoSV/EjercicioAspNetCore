@@ -24,6 +24,18 @@ namespace Data.Dtos
             this.FechaAlta = fechaAlta;
         }
 
+        public DtoArticulo(Guid codigo, string descripcion, decimal precio, string imagen, int stock, DateTime fechaAlta, Guid idTienda)
+        {
+            Codigo = codigo;
+            this.Descripcion = descripcion;
+            this.Precio = precio;
+            this.Imagen = imagen;
+            this.Stock = stock;
+            this.FechaAlta = fechaAlta;
+            IdTienda = idTienda;
+        }
+
+
         public DtoArticulo(string descripcion, decimal precio, string imagen, int stock, Guid idTienda)
         {
             Codigo = Guid.NewGuid();

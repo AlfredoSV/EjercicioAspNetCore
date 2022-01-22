@@ -33,6 +33,18 @@ namespace Data.Repositorio
             }
         }
 
+        public IEnumerable<DtoArticulo> ListarArticulosPorTienda(Guid idTienda)
+        {
+            var sql = @"select Art.*, Tie.idTienda from Tiendas Tie inner join ArticulosTiendas ArtTi on Tie.idTienda = ArtTi.idTienda
+            inner join Articulos Art on ArtTi.codigo = Art.codigo where Tie.idTienda = @idTienda";
+            using (var db = new SqlConnection(_conexion))
+            {
+                db.Open();
+                return db.Query<DtoArticulo>(sql, new { idTienda });
+            }
+        }
+
+
         public DtoArticulo BuscarArticuloPorId(Guid idArticulo)
         {
             var sql = @"SELECT [codigo]
@@ -119,6 +131,8 @@ namespace Data.Repositorio
 
             }
         }
+
+
 
         public void EditarArticulo(DtoArticulo articulo)
         {

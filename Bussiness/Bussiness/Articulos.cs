@@ -3,6 +3,8 @@ using Data.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+
 
 using Data.Repositorio;
 namespace Bussiness.Bussiness
@@ -18,6 +20,12 @@ namespace Bussiness.Bussiness
         {
             return _repositorioArticulos.ListarArticulos();
         }
+
+        public IEnumerable<DtoArticulo> ConsultarArticulosPorIdTienda(Guid idTienda)
+        {
+            return _repositorioArticulos.ListarArticulosPorTienda(idTienda);
+        }
+
 
         public void GuardarArticulo(DtoArticulo articulo)
         {
