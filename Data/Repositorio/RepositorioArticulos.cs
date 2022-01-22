@@ -33,45 +33,106 @@ namespace Data.Repositorio
             }
         }
 
-        public DtoArticulo BuscarArticuloPorId(Guid idCliente)
+        public DtoArticulo BuscarArticuloPorId(Guid idArticulo)
         {
-            var sql = "";
+            var sql = @"SELECT [codigo]
+                         ,[descripcion]
+                         ,[precio]
+                         ,[imagen]
+                         ,[stock]
+                         ,[fechaAlta]
+                      FROM [Articulos] where codigo = @idArticulo";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                return db.Query<DtoArticulo>(sql, idCliente).FirstOrDefault();
+                return db.Query<DtoArticulo>(sql, new { idArticulo }).FirstOrDefault();
             }
         }
 
-        public void EliminarArticulo(Guid id)
+
+
+        public void EliminarArticulo(Guid idArticulo)
         {
-            var sql = "";
+            var sql = "DELETE FROM [dbo].[Articulos] WHERE codigo = @idArticulo";
 
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                db.Query(sql, id);
+                db.Query(sql, new { idArticulo });
             }
         }
 
-        public void GuardarArticulo(DtoArticulo dtoCliente)
+        public void EliminarArticuloTienda(Guid idArticulo)
         {
-            var sql = @"";
+            var sql = "DELETE FROM [dbo].[ArticulosTiendas] WHERE codigo = @idArticulo";
+
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                db.Query(sql, dtoCliente);
+                db.Query(sql, new { idArticulo });
             }
         }
 
-        public void EditarArticulo(DtoArticulo dtoCliente)
+        public void GuardarArticulo(DtoArticulo dtoArticulo)
         {
-            var sql = @"";
+
+            var sql = @"INSERT INTO [dbo].[Articulos]
+           ([codigo]
+           ,[descripcion]
+           ,[precio]
+           ,[imagen]
+           ,[stock]
+           ,[fechaAlta])
+            VALUES
+           (@codigo
+           ,@descripcion
+           ,@precio
+           ,@imagen
+           ,@stock
+           ,GETDATE())";
 
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                db.Query(sql, dtoCliente);
+                db.Execute(sql, dtoArticulo);
+
+            }
+        }
+
+        public void GuardarArticuloTienda(DtoArticulo dtoArticulo)
+        {
+
+            var sql = @"INSERT INTO [dbo].[ArticulosTiendas]
+           ([idArticuloTienda]
+           ,[codigo]
+           ,[idTienda]
+           ,[fecha])
+            VALUES
+           (NEWID()
+           ,@codigo,
+            @idTienda,
+            GETDATE())";
+            using (var db = new SqlConnection(_conexion))
+            {
+                db.Open();
+                db.Execute(sql, new { dtoArticulo.Codigo, dtoArticulo.IdTienda });
+
+            }
+        }
+
+        public void EditarArticulo(DtoArticulo articulo)
+        {
+            var sql = @"UPDATE [dbo].[Articulos]
+   SET [descripcion] = @descripcion
+      ,[precio] =  @precio
+      ,[imagen] = @imagen
+      ,[stock] = @stock
+ WHERE codigo = @codigo";
+
+            using (var db = new SqlConnection(_conexion))
+            {
+                db.Open();
+                db.Query(sql, articulo);
             }
         }
     }

@@ -28,16 +28,17 @@ $('#gridArticulos').dxDataGrid({
         dataField: 'codigo',
         dataType: 'string',
         caption: 'Código',
+        width: 260
     }, {
         dataField: 'descripcion',
         dataType: 'string',
         caption: 'Descripcion',
-        width: 80
+        width: 140
     }, {
         dataField: 'precio',
         dataType: 'string',
         caption: 'Precio',
-        width: 80
+        width: 140
     }, {
         dataField: 'stock',
         dataType: 'string',
@@ -55,12 +56,12 @@ $('#gridArticulos').dxDataGrid({
         cellTemplate(container, options) {
 
             $('<a class="btn btn-danger">Eliminar</a>')
-                .attr('href', "/Cliente/EliminarCliente/" + options.data.idCliente)
+                .attr('href', "/Articulo/EliminarArticulo/" + options.data.codigo)
                 .appendTo(container);
             $('<span> / <span>')
                 .appendTo(container);
             $('<a class="btn btn-primary">Editar</a>')
-                .attr('href', "/Cliente/EditarCliente/" + options.data.idCliente)
+                .attr('href', "/Articulo/EditarArticulo/" + options.data.codigo)
                 .appendTo(container);
             $('<span> / <span>')
                 .appendTo(container);

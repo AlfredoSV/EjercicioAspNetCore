@@ -8,7 +8,7 @@
 
 <div class="container">
 
-    <form>
+    <form method="post" asp-controller="Articulo" asp-action="CrearArticulo" enctype="multipart/form-data">
         <div class="row">
             <h4 class="text-muted">Crud - @ViewData["Titulo"]</h4>
         </div>
@@ -19,26 +19,31 @@
 
                 <div class="mb-3">
 
-                    <label>Nombre:</label>
-                    <input asp-for="Nombre" class="form-control form-control-sm  mt-2" type="text">
-
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-md-6 col-lg-4">
-
-                <div class=" mb-3">
                     <label>Descripción:</label>
-                    <input asp-for="Descripcion" type="text" class="form-control form-control-sm  mt-2">
+                    <textarea asp-for="Descripcion" class="form-control form-control-sm  mt-2" cols="12"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
-
             </div>
+
 
             <div class="col-sm-4 col-md-6 col-lg-4">
 
                 <div class=" mb-3">
                     <label>Precio:</label>
-                    <input asp-for="Precio" type="number" step="0.1" class="form-control form-control-sm  mt-2">
+                    <input asp-for="Precio" type="number" step="any" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Tienda:</label>
+                    <select asp-for="IdTienda"
+                            asp-items="@ViewBag.Tiendas" class="form-control form-control-sm  mt-2">
+                    </select>
+                    <span asp-validation-for="IdTienda" class="text-danger"></span>
                 </div>
 
             </div>
@@ -53,8 +58,8 @@
                 <div class="mb-3">
 
                     <label>Imagen:</label>
-                    <input asp-for="Imagen" class="form-control-file mt-2" type="file">
-
+                    <input asp-for="Imagen" class="form-control-file mt-2" type="file" accept="image/*">
+                    <span asp-validation-for="Imagen" class="text-danger"></span>
                 </div>
             </div>
 
@@ -63,6 +68,7 @@
                 <div class=" mb-3">
                     <label>Stock:</label>
                     <input asp-for="Stock" type="number" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="Stock" class="text-danger"></span>
                 </div>
 
             </div>
@@ -72,7 +78,17 @@
 
         <div class="row">
             <div class="col-6">
-                <button type="submit" id="btnGuardarPaciente" class="btn btn-success">Enviar</button>
+                @if (ViewBag.Tiendas != null)
+                {
+                    if (ViewBag.Tiendas.Count > 0)
+                    {
+                        <button type="submit" class="btn btn-success">
+                            Enviar
+                        </button>
+                    }
+                }
+
+
 
             </div>
 

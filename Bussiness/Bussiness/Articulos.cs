@@ -19,26 +19,28 @@ namespace Bussiness.Bussiness
             return _repositorioArticulos.ListarArticulos();
         }
 
-        /*public void RegistrarCliente(DtoCliente cliente)
+        public void GuardarArticulo(DtoArticulo articulo)
         {
-
-            _repositorioClientes.GuardarCliente(cliente);
+            _repositorioArticulos.GuardarArticulo(articulo);
+            _repositorioArticulos.GuardarArticuloTienda(articulo);
         }
 
-        public DtoCliente BuscarClientePorId(Guid idCliente)
+        public DtoArticulo BuscarArticuloPorId(Guid idArticulo)
         {
-            return _repositorioClientes.BuscarClientePorId(idCliente);
+            return _repositorioArticulos.BuscarArticuloPorId(idArticulo);
         }
 
-        public void GuardarClienteEditado(DtoCliente cliente)
+        public void GuardarArticuloEditado(DtoArticulo articulo)
         {
-            _repositorioClientes.EditarCliente(cliente);
+            _repositorioArticulos.EditarArticulo(articulo);
         }
 
-        public void EliminarCliente(Guid idCliente)
+        public void EliminarArticulo(Guid idArticulo)
         {
-            _repositorioClientes.EliminarCliente(idCliente);
-        }*/
+            _repositorioArticulos.EliminarArticuloTienda(idArticulo);
+            _repositorioArticulos.EliminarArticulo(idArticulo);
+
+        }
 
     }
 }

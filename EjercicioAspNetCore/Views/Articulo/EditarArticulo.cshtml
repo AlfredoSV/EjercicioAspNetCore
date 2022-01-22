@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Titulo"] = "Articulos";
+}
+@model Articulo
+
+
+<div class="container">
+
+    <form method="post" asp-controller="Articulo" asp-action="GuardarArticuloEditado">
+        <div class="row">
+            <h4 class="text-muted">Crud - @ViewData["Titulo"]</h4>
+        </div>
+
+        <div class="row">
+
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Descripción:</label>
+                    <textarea asp-for="Descripcion" type="text" class="form-control form-control-sm  mt-2" cols="12"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Precio:</label>
+                    <input asp-for="Precio" type="number" step="any" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 col-lg-4">
+
+                <div class="mb-3">
+
+                    <label>Imagen:</label>
+                    <input asp-for="Imagen" class="form-control-file mt-2" type="file">
+                    <span asp-validation-for="Imagen" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-6 col-lg-4">
+
+                <div class=" mb-3">
+                    <label>Stock:</label>
+                    <input asp-for="Stock" type="number" class="form-control form-control-sm  mt-2">
+                    <span asp-validation-for="Stock" class="text-danger"></span>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-success">Editar</button>
+                <a href="/Cliente/Cancelar" class="btn btn-danger">Cancelar</a>
+            </div>
+
+        </div>
+
+        <input type="hidden" asp-for="Codigo" />
+
+    </form>
+
+
+</div>
