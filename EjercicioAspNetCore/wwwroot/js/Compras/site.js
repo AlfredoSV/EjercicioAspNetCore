@@ -3,6 +3,29 @@
 
 // Write your JavaScript code.
 
+const cancelarCompra = () => {
+    window.location;
+}
+
+const agregarAcarrito = () => {
+
+    let idArticulo = document.querySelector("#articulo").value;
+    console.log(idArticulo);
+
+    let idTienda = document.querySelector("#tienda").value;
+    console.log(idTienda);
+
+    let cantidad = document.querySelector("#cantidad").value;
+    console.log(cantidad);
+
+    let precio = document.querySelector("#precio").value;
+    console.log(precio);
+
+    let stock = document.querySelector("#stock").value;
+    console.log(stock);
+}
+
+/*
 
 $('#gridHistorialCompras').dxDataGrid({
     dataSource: [],
@@ -69,9 +92,6 @@ $('#gridHistorialCompras').dxDataGrid({
 }).dxDataGrid('instance');
 
 
-const detalleCliente = () => {
-    alert("Hola");
-}
 
 
 
@@ -101,4 +121,4 @@ const consultarClientes = (meth, urlSe) => {
 
 }
 
-consultarClientes("GET", "/Tienda/ListarTiendas");
+consultarClientes("GET", "/Tienda/ListarTiendas");*/
