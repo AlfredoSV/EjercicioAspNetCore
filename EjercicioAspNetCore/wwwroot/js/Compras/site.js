@@ -69,8 +69,8 @@ const finalizarCompra = () => {
         url: '/Comprar/GenerarCompra'
     }).done((result) => {
 
-
-
+        alert("Se gurado correctamente la compra");
+        location.reload();
 
     });
 

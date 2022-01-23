@@ -16,7 +16,7 @@ namespace EjercicioAspNetCore.Filters
         {
 
             var usuario = context.HttpContext.Session.GetString("Usuario");
-            var rol = context.HttpContext.Session.GetString("Rol"); ;
+            var rol = context.HttpContext.Session.GetString("Rol");
 
             if ((usuario == null || usuario.Equals("")) || (rol == null || rol.Equals("")))
             {
@@ -30,7 +30,7 @@ namespace EjercicioAspNetCore.Filters
         public void OnActionExecuting(ActionExecutingContext context)
         {
             var usuario = context.HttpContext.Session.GetString("Usuario");
-            var rol = context.HttpContext.Session.GetString("Rol"); ;
+            var rol = context.HttpContext.Session.GetString("Rol");
 
             if ((usuario == null || usuario.Equals("")) || (rol == null || rol.Equals("")))
             {
