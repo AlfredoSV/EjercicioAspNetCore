@@ -30,5 +30,59 @@ namespace Data.Repositorio
             }
         }
 
+        public IEnumerable<DtoRol> ConsultarRoles()
+        {
+            var sql = @"SELECT [IdRol],[nombre] FROM [Rol]";
+            using (var db = new SqlConnection(_conexion))
+            {
+                db.Open();
+                return db.Query<DtoRol>(sql);
+            }
+        }
+
+        public void RegistrarUsuario(DtoUsuarioLogin usuario)
+        {
+            var sql = @"INSERT INTO [dbo].[Usuarios]
+           ([idUsuario]
+           ,[correo]
+           ,[contrasenia]
+           ,[nombre]
+           ,[codigoPostal]
+           ,[estado]
+           ,[delegacionMunicipio]
+           ,[calleNum])
+     VALUES
+           (@idUsuario
+           ,@correo
+           ,@contrasenia
+           ,@nombre
+           ,@codigoPostal
+           ,@estado
+           ,@delegacionMunicipio
+           ,@calleNum)";
+            using (var db = new SqlConnection(_conexion))
+            {
+                db.Open();
+                db.Query(sql, usuario);
+            }
+        }
+
+        public void RegistrarUsuarioRol(DtoUsuarioLogin usuario)
+        {
+            var sql = @"INSERT INTO [dbo].[UsuarioRol]
+            ([idRolUsuario]
+           ,[idRol]
+           ,[idUsuario])
+             VALUES
+           (newid()
+           ,@idRol
+           ,@idUsuario)";
+            using (var db = new SqlConnection(_conexion))
+            {
+                db.Open();
+                db.Query(sql, usuario);
+            }
+        }
+
     }
 }

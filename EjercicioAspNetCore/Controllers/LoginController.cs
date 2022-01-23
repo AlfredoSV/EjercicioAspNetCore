@@ -8,6 +8,7 @@ using Data.Dtos;
 using Microsoft.AspNetCore.Http;
 using Bussiness.Bussiness;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EjercicioAspNetCore.Controllers
 {
@@ -66,11 +67,44 @@ namespace EjercicioAspNetCore.Controllers
             return View("Index");
         }
 
-        /*public IActionResult Registrarme()
+        [HttpGet]
+        public IActionResult RegistroUsuario()
         {
+            this.CargarRoles();
             return View();
-        }*/
+        }
 
+        [HttpPost]
+        public IActionResult GuardarRegistro(RegistroUsuario registro)
+        {
+            if (ModelState.IsValid)
+            {
+                var nuevoUsuario = DtoUsuarioLogin.Create(registro.Correo, registro.Contrasenia, registro.Nombre,
+                    registro.CodigoPostal, registro.Estado, registro.DelegacionMunicipio, registro.CalleNum,
+                    registro.IdRol);
 
+                _login.RegistrarUsuario(nuevoUsuario);
+
+                return View("Index");
+            }
+
+            this.CargarRoles();
+
+            return View("RegistroUsuario");
+        }
+
+        #region Métodos privados
+
+        private void CargarRoles()
+        {
+            var roles = new List<SelectListItem>();
+            _login.ObtenerRoles().ToList().ForEach(x =>
+            {
+                roles.Add(new SelectListItem(x.Nombre, x.IdRol.ToString()));
+            });
+            ViewBag.Roles = roles;
+        }
+
+        #endregion
     }
 }

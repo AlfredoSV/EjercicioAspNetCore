@@ -1,0 +1,111 @@
+﻿@{
+    Layout = "_LayoutLogin";
+}
+@using EjercicioAspNetCore.Models.LoginModels
+
+@model RegistroUsuario
+
+
+<div class="container">
+    <h1>Registro</h1>
+
+    <form method="post" asp-controller="Login" asp-action="GuardarRegistro">
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input asp-for="Correo" type="text" class="form-control" />
+                    <span asp-validation-for="Correo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="contrasenia">Contraseña:</label>
+                    <input asp-for="Contrasenia" type="password" class="form-control" />
+                    <span asp-validation-for="Contrasenia" class="text-danger"></span>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="contrasenia">Nombre:</label>
+                    <input asp-for="Nombre" type="text" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="contrasenia">Código postal:</label>
+                    <input asp-for="CodigoPostal" type="text" class="form-control" />
+                    <span asp-validation-for="CodigoPostal" class="text-danger"></span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="contrasenia">Estado:</label>
+                    <input asp-for="Estado" type="text" class="form-control" />
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="contrasenia">Dlegación o municipio:</label>
+                    <input asp-for="DelegacionMunicipio" type="text" class="form-control" />
+                    <span asp-validation-for="DelegacionMunicipio" class="text-danger"></span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="contrasenia">Calle y número:</label>
+                    <input asp-for="CalleNum" type="text" class="form-control" />
+                    <span asp-validation-for="CalleNum" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="contrasenia">Rol:</label>
+                    <select asp-for="IdRol"
+                            asp-items="@ViewBag.Roles" class="form-control form-control-sm  mt-2">
+                    </select>
+                    <span asp-validation-for="IdRol" class="text-danger"></span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <a href="/Login/Index">Iniciar sesión</a>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>

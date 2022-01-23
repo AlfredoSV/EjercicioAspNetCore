@@ -31,9 +31,10 @@ namespace EjercicioAspNetCore
 
             services.AddControllersWithViews();
 
+            //Se configura la sesión por 10 minutos
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
         }
 

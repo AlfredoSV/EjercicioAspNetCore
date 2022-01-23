@@ -15,9 +15,25 @@ namespace Bussiness.Bussiness
         }
         public DtoUsuarioLogin ObtenerUsuario(DtoUsuarioLogin dtoUsuarioLogin)
         {
-            var usuario = _repositorioLogin.BuscarUsuarioLoginPorUsuario(dtoUsuarioLogin.Correo, dtoUsuarioLogin.Contrasenia);
 
-            return usuario;
+            return _repositorioLogin.BuscarUsuarioLoginPorUsuario(dtoUsuarioLogin.Correo, dtoUsuarioLogin.Contrasenia);
+
+        }
+
+        public IEnumerable<DtoRol> ObtenerRoles()
+        {
+
+            return _repositorioLogin.ConsultarRoles();
+
+        }
+
+        public void RegistrarUsuario(DtoUsuarioLogin usuario)
+        {
+
+
+            _repositorioLogin.RegistrarUsuario(usuario);
+
+            _repositorioLogin.RegistrarUsuarioRol(usuario);
 
         }
 
