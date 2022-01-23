@@ -81,6 +81,14 @@
             </div>
 
         </div>
+        @if (ViewBag.TiendaArticulosAsociados != null)
+        {
+            if (ViewBag.TiendaArticulosAsociados)
+            {
+                <span class="text-danger">Esta tienda tiene articulos relacionados, primero elimina los articulos.</span>
+            }
+
+        }
 
     </form>
 
@@ -93,6 +101,24 @@
 
 </div>
 
+
+<div class="modal fade" id="detalleTienda" tabindex="-1" aria-labelledby="detalleTienda" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle Tienda</h5>
+
+            </div>
+            <div class="modal-body" id="cuerpoDetalleModal">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     <script src="~/js/TiendaJs/site.js" asp-append-version="true"></script>

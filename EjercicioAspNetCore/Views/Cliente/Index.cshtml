@@ -9,81 +9,7 @@
 @model Cliente
 
 <div class="container">
-    <form method="post" asp-controller="Cliente" asp-action="CrearCliente">
-        <div class="row">
-            <h4 class="text-muted">Crud - @ViewData["Titulo"]</h4>
-        </div>
-
-        <div class="row">
-
-            <div class="col-sm-12 col-md-6 col-lg-4">
-
-                <div class="mb-3">
-
-                    <label>Nombre:</label>
-                    <input asp-for="Nombre" class="form-control form-control-sm  mt-2" type="text">
-                    <span asp-validation-for="Nombre" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-md-6 col-lg-4">
-
-                <div class=" mb-3">
-                    <label>Código postal:</label>
-                    <input asp-for="CodigoPostal" type="text" class="form-control form-control-sm  mt-2">
-                    <span asp-validation-for="CodigoPostal" class="text-danger"></span>
-                </div>
-
-            </div>
-
-            <div class="col-sm-4 col-md-6 col-lg-4">
-
-                <div class=" mb-3">
-                    <label>Estado:</label>
-                    <input asp-for="Estado" type="text" class="form-control form-control-sm  mt-2">
-                    <span asp-validation-for="Estado" class="text-danger"></span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row">
-
-            <div class="col-sm-12 col-md-6 col-lg-4">
-
-                <div class="mb-3">
-
-                    <label>Delegación o municipio:</label>
-                    <input asp-for="DelegacionMunicipio" class="form-control form-control-sm  mt-2" type="text">
-                    <span asp-validation-for="DelegacionMunicipio" class="text-danger"></span>
-
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-md-6 col-lg-4">
-
-                <div class=" mb-3">
-                    <label>Calle y número:</label>
-                    <input asp-for="CalleNum" type="text" class="form-control form-control-sm  mt-2">
-                    <span asp-validation-for="CalleNum" class="text-danger"></span>
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <div class="row">
-            <div class="col-6">
-                <button type="submit" id="btnGuardarPaciente" class="btn btn-success">Enviar</button>
-
-            </div>
-
-        </div>
-
-    </form>
+    <h1>Listado de clientes</h1>
 
     <div class="dx-viewport mt-3">
 
@@ -92,6 +18,24 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" id="detalleCliente" tabindex="-1" aria-labelledby="detalleCliente" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle cliente</h5>
+
+            </div>
+            <div class="modal-body" id="cuerpoDetalleModal">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts {

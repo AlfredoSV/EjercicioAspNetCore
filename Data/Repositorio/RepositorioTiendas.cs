@@ -25,7 +25,8 @@ namespace Data.Repositorio
                         ,[estado]
                         ,[delegacionMunicipio]
                         ,[calleNum]
-                        FROM[Tiendas]";
+                        ,[idUsuario]
+                        FROM [Tiendas]";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
@@ -60,13 +61,14 @@ namespace Data.Repositorio
             }
         }
 
-        public void GuardarTienda(DtoTienda dtoTienda)
+        public void GuardarTienda(Guid idUsuario, DtoTienda dtoTienda)
         {
             var sql = @"INSERT INTO [dbo].[Tiendas]
            ([idTienda]
            ,[sucursal]
            ,[codigoPostal]
            ,[estado]
+           ,[idUsuario]
            ,[delegacionMunicipio]
            ,[calleNum])
      VALUES
@@ -74,12 +76,13 @@ namespace Data.Repositorio
            ,@sucursal
            ,@codigoPostal
            ,@estado
+           ,@idUsuario
            ,@delegacionMunicipio
            ,@calleNum)";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                db.Query(sql, dtoTienda);
+                db.Query(sql, new { dtoTienda.Sucursal, dtoTienda.CodigoPostal, dtoTienda.Estado, idUsuario, dtoTienda.DelegacionMunicipio, dtoTienda.CalleNum });
             }
         }
 

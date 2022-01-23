@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+let detalleTiendaModal = new bootstrap.Modal(document.querySelector('#detalleTienda'), {});
 
 
 $('#gridTiendas').dxDataGrid({
@@ -53,6 +54,11 @@ $('#gridTiendas').dxDataGrid({
         dataType: 'string',
         caption: 'Calle y número',
         width: 80
+    }, , {
+        dataField: 'idUsuario',
+        dataType: 'string',
+        caption: 'Id del usuario',
+        width: 80
     }, {
 
         caption: "Comandos",
@@ -70,7 +76,7 @@ $('#gridTiendas').dxDataGrid({
             $('<span> / <span>')
                 .appendTo(container);
 
-            $('<a class="btn btn-info"  href="#' + options.data.idTienda + '" >Detalle</a>')
+            $('<a class="btn btn-info" id="' + options.data.idTienda + '" onclick="detalleTienda(this)"  href="#" >Detalle</a>')
                 .appendTo(container);
 
             console.log(options);
@@ -79,10 +85,42 @@ $('#gridTiendas').dxDataGrid({
 }).dxDataGrid('instance');
 
 
-const detalleCliente = () => {
-    alert("Hola");
+
+const detalleTienda = (tienda) => {
+
+    let cuerpoModal = document.querySelector("#cuerpoDetalleModal");
+    $.ajax({
+        method: 'GET',
+        url: '/Tienda/ConsultarDetalleTienda',
+        data: { idTienda: tienda.id }
+    }).done((result) => {
+
+
+        cuerpoModal.innerHTML =
+            `
+            Calle y número: ${result.calleNum}<br>
+            Codigo Postal: ${result.codigoPostal}<br>
+            DelegacionMunicipio: ${result.delegacionMunicipio}<br>
+            Estado: ${result.estado}<br>
+            id Tienda: ${result.idTienda}<br>
+            Sucursal: ${result.sucursal}
+            `;
+
+
+        detalleTiendaModal.show();
+
+
+    });
+
+
+
 }
 
+const cerrarModal = () => {
+
+    detalleTiendaModal.hide();
+
+}
 
 
 const consultarClientes = (meth, urlSe) => {
@@ -91,7 +129,7 @@ const consultarClientes = (meth, urlSe) => {
         method: meth,
         url: urlSe
     }).done((result) => {
-
+        console.log(result)
         let dataGrid = $("#gridTiendas").dxDataGrid({
         }).dxDataGrid("instance");
         let dataSource = dataGrid.getDataSource();

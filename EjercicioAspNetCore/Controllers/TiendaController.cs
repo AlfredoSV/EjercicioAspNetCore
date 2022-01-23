@@ -18,21 +18,26 @@ namespace EjercicioAspNetCore.Controllers
     public class TiendaController : Controller
     {
         private Tiendas _tiendas { get; set; }
+
+        private Articulos _articulos { get; set; }
         public TiendaController(IConfiguration configuration)
         {
             _tiendas = new Tiendas(configuration.GetConnectionString("bd"));
+            _articulos = new Articulos(configuration.GetConnectionString("bd"));
 
         }
         public IActionResult Index()
         {
             ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
+
             return View();
         }
 
         [HttpGet]
         public IActionResult ListarTiendas()
         {
-            var tiendas = _tiendas.ConsultarTiendas();
+            var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
+            var tiendas = _tiendas.ConsultarTiendasPorUsuario(idUsuario).ToList();
 
             return Json(tiendas);
         }
@@ -45,9 +50,10 @@ namespace EjercicioAspNetCore.Controllers
 
             if (ModelState.IsValid)
             {
+                var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
                 var dtoTienda = DtoTienda.Create(cliente.Sucursal, cliente.CodigoPostal, cliente.Estado, cliente.DelegacionMunicipio, cliente.CalleNum);
-                _tiendas.CrearTienda(dtoTienda);
-                return RedirectToAction("Index", "Cliente");
+                _tiendas.CrearTienda(idUsuario, dtoTienda);
+                return RedirectToAction("Index", "Tienda");
 
             }
             return View("Index");
@@ -71,7 +77,7 @@ namespace EjercicioAspNetCore.Controllers
             Tienda tiendaModel = new Tienda()
             {
                 IdTienda = clienteRes.IdTienda,
-                Sucursal = clienteRes.sucursal,
+                Sucursal = clienteRes.Sucursal,
                 CodigoPostal = clienteRes.CodigoPostal,
                 Estado = clienteRes.Estado,
                 DelegacionMunicipio = clienteRes.DelegacionMunicipio,
@@ -87,12 +93,16 @@ namespace EjercicioAspNetCore.Controllers
 
             if (ModelState.IsValid)
             {
-                var dtoTienda = DtoTienda.Create(tienda.IdTienda, tienda.Sucursal, tienda.CodigoPostal, tienda.Estado, tienda.DelegacionMunicipio, tienda.CalleNum);
+                var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
+                var dtoTienda = DtoTienda.Create(tienda.IdTienda, tienda.Sucursal, tienda.CodigoPostal, tienda.Estado, tienda.DelegacionMunicipio, tienda.CalleNum, idUsuario);
                 _tiendas.EditarTienda(dtoTienda);
-                return RedirectToAction("Index", "Cliente");
+
+                ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
+
+                return RedirectToAction("Index", "Tienda");
 
             }
-            return View("EditarCliente", tienda);
+            return View("EditarTienda", tienda);
 
         }
 
@@ -105,15 +115,32 @@ namespace EjercicioAspNetCore.Controllers
         }
 
         [HttpGet("Tienda/EliminarTienda/{idTienda}")]
-        public IActionResult EliminarCliente(Guid idTienda)
+        public IActionResult EliminarTienda(Guid idTienda)
         {
+            ViewBag.TiendaArticulosAsociados = true;
+            var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
+            var articulos = _articulos.ConsultarArticulosPorIdTienda(idTienda);
 
-            ViewBag.TiendaEliminada = true;
-            _tiendas.EliminarTienda(idTienda);
 
-            return RedirectToAction("Index", "Tienda");
+            if (articulos.Count() <= 0)
+            {
+                _tiendas.EliminarTienda(idTienda);
+                ViewBag.TiendaArticulosAsociados = false;
+                return RedirectToAction("Index", "Tienda");
+            }
+
+            ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
+
+            return View("Index");
 
         }
+
+        [HttpGet]
+        public IActionResult ConsultarDetalleTienda(Guid idTienda)
+        {
+            return Json(_tiendas.BuscarTiendaPorId(idTienda));
+        }
+
 
     }
 }

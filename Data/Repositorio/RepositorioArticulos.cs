@@ -17,7 +17,7 @@ namespace Data.Repositorio
 
         }
 
-        public IEnumerable<DtoArticulo> ListarArticulos()
+        public IEnumerable<DtoArticulo> ListarArticulos(Guid idUsuario)
         {
             var sql = @"SELECT [codigo]
                          ,[descripcion]
@@ -25,17 +25,17 @@ namespace Data.Repositorio
                          ,[imagen]
                          ,[stock]
                          ,[fechaAlta]
-                      FROM [Articulos]";
+                      FROM [Articulos] where idUsuario = @idUsuario";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
-                return db.Query<DtoArticulo>(sql);
+                return db.Query<DtoArticulo>(sql, new { idUsuario });
             }
         }
 
         public IEnumerable<DtoArticulo> ListarArticulosPorTienda(Guid idTienda)
         {
-            var sql = @"select Art.*, Tie.idTienda from Tiendas Tie inner join ArticulosTiendas ArtTi on Tie.idTienda = ArtTi.idTienda
+            var sql = @"select Art.codigo,Art.descripcion,Art.precio,Art.imagen,Art.stock,Art.fechaAlta, Tie.idTienda from Tiendas Tie inner join ArticulosTiendas ArtTi on Tie.idTienda = ArtTi.idTienda
             inner join Articulos Art on ArtTi.codigo = Art.codigo where Tie.idTienda = @idTienda";
             using (var db = new SqlConnection(_conexion))
             {
@@ -94,14 +94,16 @@ namespace Data.Repositorio
            ,[precio]
            ,[imagen]
            ,[stock]
-           ,[fechaAlta])
+           ,[fechaAlta],
+            [idUsuario])
             VALUES
            (@codigo
            ,@descripcion
            ,@precio
            ,@imagen
            ,@stock
-           ,GETDATE())";
+           ,GETDATE(),
+            @idUsuario)";
 
             using (var db = new SqlConnection(_conexion))
             {

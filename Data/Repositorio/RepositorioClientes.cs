@@ -20,7 +20,9 @@ namespace Data.Repositorio
         }
         public IEnumerable<DtoCliente> ListarClientes()
         {
-            var sql = "select [idCliente],[nombre],[codigoPostal],[estado],[delegacionMunicipio],[calleNum] from Clientes";
+            var sql = @"select usu.[idUsuario] as idCliente,usu.[nombre],[codigoPostal],[estado],[delegacionMunicipio],[calleNum] from Usuarios usu
+                        inner join UsuarioRol usuro on usuro.idUsuario = usu.idUsuario inner join
+                        Rol ro on ro.IdRol = usuro.idRol where ro.nombre = 'Cliente' and estaActivo = 1";
 
             using (var db = new SqlConnection(_conexion))
             {
@@ -31,7 +33,7 @@ namespace Data.Repositorio
 
         public DtoCliente BuscarClientePorId(Guid idCliente)
         {
-            var sql = "select [idCliente],[nombre],[codigoPostal],[estado],[delegacionMunicipio],[calleNum] from Clientes where [idCliente] = @idCliente";
+            var sql = "select [idUsuario] as idCliente,[nombre],[codigoPostal],[estado],[delegacionMunicipio],[calleNum] from Usuarios where [idUsuario] = @idCliente";
 
             using (var db = new SqlConnection(_conexion))
             {
@@ -42,7 +44,7 @@ namespace Data.Repositorio
 
         public void EliminarCliente(Guid idCliente)
         {
-            var sql = "Delete from Clientes where idCliente = @idCliente";
+            var sql = " UPDATE Usuarios SET estaActivo = 0 where idUsuario = @idCliente";
 
             using (var db = new SqlConnection(_conexion))
             {
@@ -76,14 +78,14 @@ namespace Data.Repositorio
 
         public void EditarCliente(DtoCliente dtoCliente)
         {
-            var sql = @"UPDATE [dbo].[Clientes]
-            SET [idCliente] = @idCliente
-            ,[nombre] = @nombre
+            var sql = @"UPDATE [dbo].[Usuarios]
+            SET 
+             [nombre] = @nombre
             ,[codigoPostal] = @codigoPostal
             ,[estado] = @estado
             ,[delegacionMunicipio] = @delegacionMunicipio
             ,[calleNum] = @calleNum
-            WHERE [idCliente] = @idCliente";
+            WHERE [idUsuario] = @idCliente";
 
             using (var db = new SqlConnection(_conexion))
             {

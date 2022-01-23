@@ -34,9 +34,9 @@ namespace EjercicioAspNetCore.Controllers
             ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
 
             var tiendas = new List<SelectListItem>();
-            _tiendas.ConsultarTiendas().ToList().ForEach(x =>
+            _tiendas.ConsultarTiendasCompra().ToList().ForEach(x =>
             {
-                tiendas.Add(new SelectListItem(x.sucursal, x.IdTienda.ToString()));
+                tiendas.Add(new SelectListItem(x.Sucursal, x.IdTienda.ToString()));
             });
             ViewBag.Tiendas = tiendas;
 

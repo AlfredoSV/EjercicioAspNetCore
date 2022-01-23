@@ -19,10 +19,10 @@ namespace Data.Repositorio
         public IEnumerable<DtoCompra> ConsultarMisCompras(Guid idUsuario)
         {
             var sql = @"SELECT
-      [idCliente]
+      [idUsuario] as idCliente
       ,[fecha]
       ,[total]
-  FROM [EjercicioAspNetCore].[dbo].[ClientesArticulosCompra] where idCliente = @idCliente";
+  FROM [EjercicioAspNetCore].[dbo].[ClientesArticulosCompra] where idUsuario = @idUsuario";
 
             using (var db = new SqlConnection(_conexion))
             {
@@ -31,7 +31,7 @@ namespace Data.Repositorio
 
                 return db.Query<DtoCompra>(sql, new
                 {
-                    idCliente = idUsuario
+                    idUsuario
                 });
 
 
@@ -72,16 +72,16 @@ namespace Data.Repositorio
             }
         }
 
-        public void GuardarCompra(DtoCompra dtoCompra, Guid idCompra, Guid idCliente, DateTime fechaCompra)
+        public void GuardarCompra(DtoCompra dtoCompra, Guid idCompra, Guid idUsuario, DateTime fechaCompra)
         {
             var sql = @"INSERT INTO [dbo].[ClientesArticulosCompra]
            ([idCompra]
-           ,[idCliente]
+           ,[idUsuario]
            ,[fecha]
            ,[total])
      VALUES
            (@idCompra
-           ,@idCliente
+           ,@idUsuario
            ,@fecha
            ,@total)";
 
@@ -94,7 +94,7 @@ namespace Data.Repositorio
                 {
 
                     idCompra,
-                    idCliente,
+                    idUsuario,
                     Fecha = fechaCompra,
                     dtoCompra.Total
 

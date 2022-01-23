@@ -3,6 +3,8 @@
 
 // Write your JavaScript code.
 
+let detalleArticuloModal = new bootstrap.Modal(document.querySelector('#detalleArticulo'), {});
+
 
 $('#gridArticulos').dxDataGrid({
     dataSource: [],
@@ -66,7 +68,7 @@ $('#gridArticulos').dxDataGrid({
             $('<span> / <span>')
                 .appendTo(container);
 
-            $('<a class="btn btn-info" onclick="detalleCliente()" href="#' + options.data.idCliente + '" >Detalle</a>')
+            $('<a class="btn btn-info" id="' + options.data.codigo + '" onclick="detalleArticulo(this)" href="#" >Detalle</a>')
                 .appendTo(container);
 
             console.log(options);
@@ -75,8 +77,47 @@ $('#gridArticulos').dxDataGrid({
 }).dxDataGrid('instance');
 
 
-const detalleCliente = () => {
-    alert("Hola");
+const detalleArticulo = (articulo) => {
+
+    let cuerpoModal = document.querySelector("#cuerpoDetalleModal");
+    $.ajax({
+        method: 'GET',
+        url: '/Articulo/ConsultarDetalleArticulo',
+        data: { idArticulo: articulo.id }
+    }).done((result) => {
+        cuerpoModal.innerHTML = '';
+        if (result.imagen != "") {
+            cuerpoModal.innerHTML =
+                `<img src="${result.imagen}"><img>`;
+        }
+        cuerpoModal.innerHTML +=
+            `<br>
+             Código:${result.codigo}
+             <br>
+             Descripcion:${result.descripcion}
+             <br>
+             Fecha alta: ${result.fechaAlta}
+             <br>
+             Precio:${result.precio}
+            <br>
+             Stcok:${result.stock}
+            `;
+
+
+
+        detalleArticuloModal.show();
+
+
+    });
+
+
+
+}
+
+const cerrarModal = () => {
+
+    detalleArticuloModal.hide();
+
 }
 
 

@@ -16,10 +16,12 @@ namespace Bussiness.Bussiness
         {
             _repositorioArticulos = new RepositorioArticulos(conex);
         }
-        public IEnumerable<DtoArticulo> ConsultarArticulos()
+        public IEnumerable<DtoArticulo> ConsultarArticulos(Guid idUsuario)
         {
-            return _repositorioArticulos.ListarArticulos();
+            return _repositorioArticulos.ListarArticulos(idUsuario);
         }
+
+
 
         public IEnumerable<DtoArticulo> ConsultarArticulosPorIdTienda(Guid idTienda)
         {

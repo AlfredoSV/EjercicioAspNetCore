@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Data.Repositorio;
+using System.Linq;
+
 namespace Bussiness.Bussiness
 {
     public class Tiendas
@@ -13,13 +15,17 @@ namespace Bussiness.Bussiness
         {
             _repositorioTiendas = new RepositorioTiendas(conex);
         }
-        public IEnumerable<DtoTienda> ConsultarTiendas()
+        public IEnumerable<DtoTienda> ConsultarTiendasPorUsuario(Guid idUsuario)
+        {
+            return _repositorioTiendas.ListarTiendas().ToList().Where((x) => x.IdUsuario == idUsuario);
+        }
+        public IEnumerable<DtoTienda> ConsultarTiendasCompra()
         {
             return _repositorioTiendas.ListarTiendas();
         }
-        public void CrearTienda(DtoTienda dtoTienda)
+        public void CrearTienda(Guid idUsuario, DtoTienda dtoTienda)
         {
-            _repositorioTiendas.GuardarTienda(dtoTienda);
+            _repositorioTiendas.GuardarTienda(idUsuario, dtoTienda);
         }
         public void EditarTienda(DtoTienda dtoTienda)
         {

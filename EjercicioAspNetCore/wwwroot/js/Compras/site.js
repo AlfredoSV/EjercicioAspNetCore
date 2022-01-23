@@ -7,6 +7,8 @@
 localStorage.removeItem("miCompra");
 localStorage.removeItem("totalCompra");
 
+
+
 const cancelarCompra = () => {
 
     location.reload();
@@ -197,12 +199,18 @@ const cargarArticulos = () => {
     let stock = document.querySelector("#stock");
     let cantidad = document.querySelector("#cantidad");
 
+    let btnAgregar = document.querySelector("#btnAgregar");
+    let btnComprar = document.querySelector("#btnComprar");
+
+
+
     articuloSelect.innerHTML = '';
     cantidad.value = '';
 
     precio.value = '';
     stock.value = '';
-
+    btnAgregar.disabled = false;
+    btnComprar.disabled = false;
 
     $.ajax({
         method: 'GET',
@@ -210,9 +218,14 @@ const cargarArticulos = () => {
         url: '/Comprar/ArticulosPoTienda'
     }).done((result) => {
 
+
+
         if (result.length == 0) {
             alert("Esta tienda no tiene ningun articulo asociado");
             ///Falta deshabilitar botones
+            btnAgregar.disabled = true;
+            btnComprar.disabled = true;
+
         } else {
             result.forEach((x) => {
                 articuloSelect.innerHTML += '<option value="' + x.codigo + '">' + x.descripcion + '</option>'

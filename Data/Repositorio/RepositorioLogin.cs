@@ -22,7 +22,7 @@ namespace Data.Repositorio
             var sql = @"SELECT usu.[idUsuario],usu.[correo]
                         ,usu.[contrasenia], ro.nombre as rol
                         FROM [Usuarios] usu inner join[UsuarioRol] usurol on usu.idUsuario= usurol.idUsuario inner join [Rol] ro
-                        on ro.IdRol = usurol.idRol where correo = @usuario and contrasenia = @contrasenia ";
+                        on ro.IdRol = usurol.idRol where correo = @usuario and contrasenia = @contrasenia and estaActivo = 1 ";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
@@ -50,7 +50,8 @@ namespace Data.Repositorio
            ,[codigoPostal]
            ,[estado]
            ,[delegacionMunicipio]
-           ,[calleNum])
+           ,[calleNum]
+           ,[estaActivo])
      VALUES
            (@idUsuario
            ,@correo
@@ -59,7 +60,8 @@ namespace Data.Repositorio
            ,@codigoPostal
            ,@estado
            ,@delegacionMunicipio
-           ,@calleNum)";
+           ,@calleNum
+           ,1)";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();

@@ -14,6 +14,7 @@ namespace Data.Dtos
         public DateTime FechaAlta { get; set; }
         public Guid IdTienda { get; set; }
 
+        public Guid IdUsuario { get; set; }
         public DtoArticulo(Guid codigo, string descripcion, decimal precio, string imagen, int stock, DateTime fechaAlta)
         {
             Codigo = codigo;
@@ -36,8 +37,9 @@ namespace Data.Dtos
         }
 
 
-        public DtoArticulo(string descripcion, decimal precio, string imagen, int stock, Guid idTienda)
+        public DtoArticulo(string descripcion, decimal precio, string imagen, int stock, Guid idTienda, Guid idUsuario)
         {
+            IdUsuario = idUsuario;
             Codigo = Guid.NewGuid();
             Descripcion = descripcion;
             Precio = precio;
@@ -58,9 +60,9 @@ namespace Data.Dtos
         {
             return new DtoArticulo(codigo, descripcion, precio, imagen, stock);
         }
-        public static DtoArticulo Create(string descripcion, decimal precio, string imagen, int stock, Guid idTienda)
+        public static DtoArticulo Create(string descripcion, decimal precio, string imagen, int stock, Guid idTienda, Guid idUsuario)
         {
-            return new DtoArticulo(descripcion, precio, imagen, stock, idTienda);
+            return new DtoArticulo(descripcion, precio, imagen, stock, idTienda, idUsuario);
         }
     }
 }

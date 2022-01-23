@@ -37,23 +37,6 @@ namespace EjercicioAspNetCore.Controllers
             return Json(clientes);
         }
 
-        [HttpPost]
-        public IActionResult CrearCliente([FromForm] Cliente cliente)
-        {
-
-
-            if (ModelState.IsValid)
-            {
-                var dtoCliente = DtoCliente.Create(cliente.Nombre, cliente.CodigoPostal, cliente.Estado, cliente.DelegacionMunicipio, cliente.CalleNum);
-                _clientes.RegistrarCliente(dtoCliente);
-                return RedirectToAction("Index", "Cliente");
-
-            }
-            return View("Index");
-
-        }
-
-
         [HttpGet("Cliente/EditarCliente/{idCliente}")]
         public IActionResult EditarCliente(Guid idCliente)
         {
@@ -114,6 +97,11 @@ namespace EjercicioAspNetCore.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult DetalleCliente(Guid idCliente)
+        {
+            return Json(_clientes.BuscarClientePorId(idCliente));
+        }
 
     }
 }

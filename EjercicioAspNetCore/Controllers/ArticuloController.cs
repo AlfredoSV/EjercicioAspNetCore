@@ -29,12 +29,13 @@ namespace EjercicioAspNetCore.Controllers
 
         public IActionResult Index()
         {
+            var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
             ViewBag.Rol = HttpContext.Session.GetString("Rol").ToString();
 
             var tiendas = new List<SelectListItem>();
-            _tiendas.ConsultarTiendas().ToList().ForEach(x =>
+            _tiendas.ConsultarTiendasPorUsuario(idUsuario).ToList().ForEach(x =>
             {
-                tiendas.Add(new SelectListItem(x.sucursal, x.IdTienda.ToString()));
+                tiendas.Add(new SelectListItem(x.Sucursal, x.IdTienda.ToString()));
             });
             ViewBag.Tiendas = tiendas;
 
@@ -44,7 +45,8 @@ namespace EjercicioAspNetCore.Controllers
         [HttpGet]
         public IActionResult ListarArticulos()
         {
-            var articulos = _articulos.ConsultarArticulos();
+            var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
+            var articulos = _articulos.ConsultarArticulos(idUsuario);
 
             return Json(articulos);
         }
@@ -52,6 +54,7 @@ namespace EjercicioAspNetCore.Controllers
         [HttpPost]
         public IActionResult CrearArticulo([FromForm] Articulo articulo)
         {
+            var idUsuario = Guid.Parse(HttpContext.Session.GetString("IdUsuario").ToString());
             var imagen = string.Empty;
             if (ModelState.IsValid)
             {
@@ -60,7 +63,7 @@ namespace EjercicioAspNetCore.Controllers
                     imagen = ServicioImagenToBase64.ConvertToBase64(articulo.Imagen.OpenReadStream());
                 }
 
-                var dtoArticulo = DtoArticulo.Create(articulo.Descripcion, articulo.Precio, imagen, articulo.Stock, articulo.IdTienda);
+                var dtoArticulo = DtoArticulo.Create(articulo.Descripcion, articulo.Precio, imagen, articulo.Stock, articulo.IdTienda, idUsuario);
                 _articulos.GuardarArticulo(dtoArticulo);
                 return RedirectToAction("Index", "Articulo");
 
@@ -131,7 +134,7 @@ namespace EjercicioAspNetCore.Controllers
 
 
         [HttpGet("Articulo/EliminarArticulo/{idArticulo}")]
-        public IActionResult EliminarCliente(Guid idArticulo)
+        public IActionResult EliminarArticulo(Guid idArticulo)
         {
 
             ViewBag.idArticuloEliminado = true;
@@ -139,5 +142,13 @@ namespace EjercicioAspNetCore.Controllers
             return RedirectToAction("Index", "Articulo");
 
         }
+
+        [HttpGet]
+        public IActionResult ConsultarDetalleArticulo(Guid idArticulo)
+        {
+            return Json(_articulos.BuscarArticuloPorId(idArticulo));
+
+        }
+
     }
 }

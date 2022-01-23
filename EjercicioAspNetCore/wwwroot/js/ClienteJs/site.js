@@ -3,6 +3,9 @@
 
 // Write your JavaScript code.
 
+let detalleClienteModal = new bootstrap.Modal(document.querySelector('#detalleCliente'), {});
+
+
 
 $('#gridClientes').dxDataGrid({
     dataSource: [],
@@ -59,7 +62,7 @@ $('#gridClientes').dxDataGrid({
         alignment: "center",
         cellTemplate(container, options) {
 
-            $('<a class="btn btn-danger">Eliminar</a>')
+            $('<a class="btn btn-danger">Desactivar cliente</a>')
                 .attr('href', "/Cliente/EliminarCliente/" + options.data.idCliente)
                 .appendTo(container);
             $('<span> / <span>')
@@ -70,7 +73,7 @@ $('#gridClientes').dxDataGrid({
             $('<span> / <span>')
                 .appendTo(container);
 
-            $('<a class="btn btn-info" onclick="detalleCliente()" href="#' + options.data.idCliente + '" >Detalle</a>')
+            $('<a class="btn btn-info" id ="' + options.data.idCliente + '" onclick="detalleCliente(this)" href="#" >Detalle</a>')
                 .appendTo(container);
 
             console.log(options);
@@ -79,8 +82,44 @@ $('#gridClientes').dxDataGrid({
 }).dxDataGrid('instance');
 
 
-const detalleCliente = () => {
-    alert("Hola");
+
+
+const detalleCliente = (cliente) => {
+
+    let cuerpoModal = document.querySelector("#cuerpoDetalleModal");
+    $.ajax({
+        method: 'GET',
+        url: '/Cliente/DetalleCliente',
+        data: { idCliente: cliente.id }
+    }).done((result) => {
+
+
+        cuerpoModal.innerHTML =
+            `
+            Calle y número: ${result.calleNum}<br>
+            Código postal: ${result.codigoPostal} <br>
+            Delegación o municipio: ${result.delegacionMunicipio} <br>
+            Estado: ${result.estado} <br>
+            Id cliente: ${result.idCliente} <br>
+            Nombre: ${result.nombre} <br>
+            `;
+
+        console.log(result)
+
+
+        detalleClienteModal.show();
+
+
+    });
+
+
+
+}
+
+const cerrarModal = () => {
+
+    detalleClienteModal.hide();
+
 }
 
 
