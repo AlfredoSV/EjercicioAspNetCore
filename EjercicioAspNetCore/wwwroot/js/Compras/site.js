@@ -19,6 +19,8 @@ const cancelarCompra = () => {
 const eliminarDeCarrito = (articulo) => {
 
     let total = document.querySelector("#total");
+    let miCarrito = JSON.parse(localStorage.getItem("miCompra"));
+
 
     //Quitar los elementos de la tabla y del local storage
     let tablaCompra = document.querySelector("#cuerpoTablaCompra");
@@ -53,28 +55,44 @@ const eliminarDeCarrito = (articulo) => {
     total.innerText = parseFloat(totalCompra).toFixed(2);
     localStorage.setItem("totalCompra", totalCompra)
 
-}
+    if (totalCompra <= 0) {
 
-const finalizarCompra = () => {
-    alert("Hola");
-    var compra = {
-        articulos: JSON.parse(localStorage.getItem("miCompra")),
-        total: parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2))
+        btnAgregar.disabled = true;
+        btnComprar.disabled = true;
+
 
     }
 
-    console.log(compra)
 
-    $.ajax({
-        method: 'POST',
-        data: compra,
-        url: '/Comprar/GenerarCompra'
-    }).done((result) => {
+}
 
-        alert("Se gurado correctamente la compra");
-        location.reload();
+const finalizarCompra = () => {
 
-    });
+    let miCarrito = JSON.parse(localStorage.getItem("miCompra"));
+
+    if (miCarrito == null || miCarrito.length == 0) {
+
+        alert("Debes seleccionar al menos un articulos para finalizar la compra");
+
+    } else {
+
+        let compra = {
+            articulos: JSON.parse(localStorage.getItem("miCompra")),
+            total: parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2))
+
+        }
+
+        $.ajax({
+            method: 'POST',
+            data: compra,
+            url: '/Comprar/GenerarCompra'
+        }).done((result) => {
+
+            alert("Se guardo correctamente la compra");
+            location.reload();
+
+        });
+    }
 
 }
 
@@ -85,6 +103,13 @@ const cargarDetalleArticulo = () => {
     let cantidad = document.querySelector("#cantidad");
     let precio = document.querySelector("#precio");
     let stock = document.querySelector("#stock");
+    let btnAgregar = document.querySelector("#btnAgregar");
+    let btnComprar = document.querySelector("#btnComprar");
+
+    let miCarrito = JSON.parse(localStorage.getItem("miCompra"));
+
+    btnAgregar.disabled = false;
+    btnComprar.disabled = false;
 
 
     let resArticulo = articulosLocalStorage.find((x) => {
@@ -92,6 +117,22 @@ const cargarDetalleArticulo = () => {
         return x.codigo == articulo.value;
 
     });
+
+    if (resArticulo.stock == 0 || stock == 0) {
+        cantidad.max = 0;
+        btnAgregar.disabled = true;
+        btnComprar.disabled = true;
+
+    }
+
+    if (miCarrito != null) {
+        if (miCarrito.length != 0) {
+            btnAgregar.disabled = false;
+            btnComprar.disabled = false;
+        }
+
+    }
+
 
     precio.value = resArticulo.precio;
     stock.value = resArticulo.stock;
@@ -124,6 +165,8 @@ const agregarAcarrito = () => {
     let tablaCompra = document.querySelector("#cuerpoTablaCompra");
 
     if (cantidad != '') {
+
+        alert(cantidad);
 
         let idArticuloCarrito = articulo.value + (new Date().getMilliseconds() + new Date().getTime());
 
@@ -165,7 +208,7 @@ const agregarAcarrito = () => {
 
         }
     } else {
-        alert("Es necesario rellenar los campos")
+        alert("No puede agregar 0 articulos")
     }
 
     let totalCompra = 0.0;
@@ -222,7 +265,7 @@ const cargarArticulos = () => {
 
         if (result.length == 0) {
             alert("Esta tienda no tiene ningun articulo asociado");
-            ///Falta deshabilitar botones
+
             btnAgregar.disabled = true;
             btnComprar.disabled = true;
 
@@ -232,9 +275,16 @@ const cargarArticulos = () => {
             });
 
 
+
             precio.value = result[0].precio;
             stock.value = result[0].stock;
             cantidad.max = result[0].stock;
+
+            if (result[0].stock == 0) {
+                cantidad.min = 0;
+                btnAgregar.disabled = true;
+                btnComprar.disabled = true;
+            }
 
             localStorage.setItem("articulos", JSON.stringify(result));
 

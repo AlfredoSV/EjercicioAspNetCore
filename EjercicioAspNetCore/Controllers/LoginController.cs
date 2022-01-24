@@ -43,7 +43,7 @@ namespace EjercicioAspNetCore.Controllers
                     HttpContext.Session.SetString("Usuario", usuarioRes.Correo);
                     HttpContext.Session.SetString("Rol", usuarioRes.Rol);
                     HttpContext.Session.SetString("IdUsuario", usuarioRes.IdUsuario.ToString());
-                    if (usuarioRes.Rol.Equals("Admin"))
+                    if (usuarioRes.Rol.Equals("Vendedor"))
                         return RedirectToAction("Index", "Articulo");
                     else if (usuarioRes.Rol.Equals("Cliente"))
                         return RedirectToAction("Index", "Comprar");

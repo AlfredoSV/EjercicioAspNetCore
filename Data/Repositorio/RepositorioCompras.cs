@@ -53,12 +53,15 @@ namespace Data.Repositorio
            ,@cantidad
            ,@fechaCompra)";
 
+            var sqlActualizarStock = @"UPDATE Articulos SET stock = (select stock from Articulos where codigo = @codigo) - @cantidadAr
+            where codigo = @codigo";
             using (var db = new SqlConnection(_conexion))
             {
                 db.Open();
 
                 foreach (var articulo in dtoCompra.Articulos)
                 {
+                    db.Query(sqlActualizarStock, new { articulo.Codigo, articulo.CantidadAr });
                     db.Query(sql, new
                     {
                         articulo.Codigo,

@@ -32,17 +32,19 @@ $('#gridHistorialCompras').dxDataGrid({
         dataField: 'idCliente',
         dataType: 'string',
         caption: 'Id cliente',
+        alignment: "center",
     }, {
         dataField: 'fecha',
         dataType: 'date',
-        caption: 'Fecha de compra'
+        caption: 'Fecha de compra',
+        alignment: "center",
 
     }, {
-        dataField: 'total',
-        dataType: 'string',
-        caption: 'Total de compra',
 
-    }],
+        caption: "Total",
+        alignment: "center",
+        dataField: 'total',
+    },],
 }).dxDataGrid('instance');
 
 
