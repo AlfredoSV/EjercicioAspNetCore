@@ -8,8 +8,8 @@ Pasos a seguir para su funcionamiento
 
 3.-Existen 2 tipos de usuarios: Vendedor y Cliente
 
-(Nota: Es importante tener esos dos roles insetador en la tabla Rol para el correcto funcionamiento del proyecto)
-(Nota: No se relizo un correcto tratameinto de excepciones por fal de tiempo, pero en la siguiente versión se atacará este problema)
+(Nota: Es importante tener esos dos roles insertados en la tabla Rol para el correcto funcionamiento del proyecto)
+(Nota: No se relizo un correcto tratamiento de excepciones por falta de tiempo, pero en la siguiente versión se atacará este problema)
 
 # Vistas de login y registro de usuario
 
