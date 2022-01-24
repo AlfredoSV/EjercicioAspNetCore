@@ -12,16 +12,21 @@ Pasos a seguir para su funcionamiento
 
 # Vistas de login y registro de usuario
 
-![cap1](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap1.PNG)
+![cap1](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap1.PNG)
+![cap2](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap2.PNG)
 
 # Vistas para vendedor
 
-![cap2](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap2.PNG)
+![cap3](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap3.PNG)
+![cap4](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap4.PNG)
+![cap5](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap5.PNG)
+
+
 
 
 # Vistas para cliente 
 
-![cap3](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap3.PNG)
-
+![cap6](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap6.PNG)
+![cap7](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap7.PNG)
 
 
