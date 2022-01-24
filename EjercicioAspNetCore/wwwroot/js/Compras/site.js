@@ -127,7 +127,7 @@ const cargarDetalleArticulo = () => {
 
     if (miCarrito != null) {
         if (miCarrito.length != 0) {
-            btnAgregar.disabled = false;
+
             btnComprar.disabled = false;
         }
 
@@ -164,9 +164,9 @@ const agregarAcarrito = () => {
 
     let tablaCompra = document.querySelector("#cuerpoTablaCompra");
 
-    if (cantidad != '') {
+    if (cantidad != '' && cantidad <= stock && cantidad != 0) {
 
-        alert(cantidad);
+
 
         let idArticuloCarrito = articulo.value + (new Date().getMilliseconds() + new Date().getTime());
 
@@ -207,25 +207,27 @@ const agregarAcarrito = () => {
             localStorage.setItem("miCompra", JSON.stringify(artCargados));
 
         }
+
+        let totalCompra = 0.0;
+
+        if (localStorage.getItem("totalCompra") == undefined) {
+
+            totalCompra = parseFloat((precio * cantidad)).toFixed(2);;
+
+        } else {
+
+            totalCompra = parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2));
+
+            totalCompra += parseFloat(parseFloat((precio * cantidad)).toFixed(2));
+        }
+
+        total.innerText = parseFloat(totalCompra).toFixed(2);
+        localStorage.setItem("totalCompra", totalCompra)
+
+
     } else {
-        alert("No puede agregar 0 articulos")
+        alert("No puede agregar 0 ó más articulos de los que se encuentran disponibles")
     }
-
-    let totalCompra = 0.0;
-
-    if (localStorage.getItem("totalCompra") == undefined) {
-
-        totalCompra = parseFloat((precio * cantidad)).toFixed(2);;
-
-    } else {
-
-        totalCompra = parseFloat(parseFloat(localStorage.getItem("totalCompra")).toFixed(2));
-
-        totalCompra += parseFloat(parseFloat((precio * cantidad)).toFixed(2));
-    }
-
-    total.innerText = parseFloat(totalCompra).toFixed(2);
-    localStorage.setItem("totalCompra", totalCompra)
 
 
 
