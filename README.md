@@ -17,16 +17,16 @@ Pasos a seguir para su funcionamiento
 
 # Vistas para vendedor
 
-![cap3](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap3.PNG)
-![cap4](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap4.PNG)
-![cap5](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap5.PNG)
+![cap3](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap3.PNG)
+![cap4](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap4.PNG)
+![cap5](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap5.PNG)
 
 
 
 
 # Vistas para cliente 
 
-![cap6](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap6.PNG)
-![cap7](https://github.com/AlfredoSV/Crud-Obreros-JavaSE/blob/main/imagenes/cap7.PNG)
+![cap6](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap6.PNG)
+![cap7](https://github.com/AlfredoSV/EjercicioAspNetCore/blob/master/capturas/cap7.PNG)
 
 
