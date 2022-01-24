@@ -57,9 +57,7 @@ const eliminarDeCarrito = (articulo) => {
 
     if (totalCompra <= 0) {
 
-        btnAgregar.disabled = true;
-        btnComprar.disabled = true;
-
+        btnComprar.disabled = false;
 
     }
 
@@ -179,6 +177,7 @@ const agregarAcarrito = () => {
             nombre: articuloNombre
 
         }
+
 
         tablaCompra.innerHTML += `
         <tr>
