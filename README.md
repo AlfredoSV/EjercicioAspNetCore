@@ -2,13 +2,14 @@
 
 Pasos a seguir para su funcionamiento
 
-1.-Ejecutar el archivo EjercicioASPNetCoreSql.sql para crear las tablas o restaurar el bd.bak
+1.-Ejecutar el archivo EjercicioASPNetCoreSql.sql para crear las tablas o restaurar el EjercicioAspNetCore.bak
 
 2.-Cambiar conexión a bd en appsetings.json del proyecto mvc de presentación
 
 3.-Existen 2 tipos de usuarios: Vendedor y Cliente
 
-(Nota: Es importante tener esos dos roles insetador en la tabla Rol para el correcto funcioanamiento del proyecto)
+(Nota: Es importante tener esos dos roles insetador en la tabla Rol para el correcto funcionamiento del proyecto)
+(Nota: No se relizo un correcto tratameinto de excepciones por fal de tiempo, pero en la siguiente versión se atacará este problema)
 
 # Vistas de login y registro de usuario
 
