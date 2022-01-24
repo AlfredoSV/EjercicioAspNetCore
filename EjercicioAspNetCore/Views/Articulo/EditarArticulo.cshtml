@@ -6,7 +6,7 @@
 
 <div class="container">
 
-    <form method="post" asp-controller="Articulo" asp-action="GuardarArticuloEditado">
+    <form method="post" asp-controller="Articulo" enctype="multipart/form-data" asp-action="GuardarArticuloEditado">
         <div class="row">
             <h4 class="text-muted">Crud - @ViewData["Titulo"]</h4>
         </div>

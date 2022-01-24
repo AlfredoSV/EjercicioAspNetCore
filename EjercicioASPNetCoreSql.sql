@@ -1,4 +1,3 @@
-DROP DATABASE EjercicioAspNetCore;
 CREATE DATABASE EjercicioAspNetCore;
 
 GO

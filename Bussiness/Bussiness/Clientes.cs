@@ -19,11 +19,6 @@ namespace Bussiness.Bussiness
             return _repositorioClientes.ListarClientes();
         }
 
-        public void RegistrarCliente(DtoCliente cliente)
-        {
-
-            _repositorioClientes.GuardarCliente(cliente);
-        }
 
         public DtoCliente BuscarClientePorId(Guid idCliente)
         {
